@@ -12,6 +12,13 @@ body {
     display: inline-block;
 }
 
+#meal-plan-calendar {
+    /* background: white; */
+    border: 1px solid lightgreen;
+    border-radius: 5px;
+    opacity: 75%;
+}
+
 .opaque {
     opacity: 0.75;
 }

@@ -25,7 +25,7 @@
     </head>
     <body>
         
-        <div class="wrapper" style="background-image: url({% static 'images/coffee-background.jpg' %});">
+        <div class="wrapper" style="background-image: url({% static 'images/green-salad-food-wallpaper.jpg' %});">
             <!-- Sidebar -->
             <nav id="sidebar" class="text-muted">
                 <div class="sidebar-header text-right">
@@ -71,19 +71,58 @@
                 <div class="container-fluid">
                     <h1 class="display-4 text-center">Meal Plan</h1>
 
-                    <div class="container-fluid">
-                        
+                    <!--Calendar Example Entry-->
+                    <div class="container bg-white" id="meal-plan-calendar">
+                        <div class="row row-striped">
+                            <div class="col-2 text-right">
+                                <h1 class="display-4"><span class="badge badge-secondary">23</span></h1>
+                                <h2>OCT</h2>
+                            </div>
+                            <div class="col-10">
+                                <h3 class="text-uppercase"><strong>Ice Cream Social</strong></h3>
+                                <ul class="list-inline">
+                                    <li class="list-inline-item"><i class="fas fa-calendar"></i> Monday</li>
+                                    <li class="list-inline-item"><i class="fas fa-clock"></i> 12:30 PM - 2:00 PM</li>
+                                </ul>
+                                <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            </div>
+                        </div>
                     </div>
+                   
+                        
+                    
+                    <hr class="rounded">
 
-
-
-
+                    <!--Adding a meal -->
+                    <h3 class="text-center">Add to Meal Plan</h3>
+                    <div class="container bg-white" id="add-meal-plan">
+                        <form action="/add_to_meal_plan/" method="POST">
+                            {% csrf_token %}
+                            <!--Add Meal from User's list of recipes-->
+                            <div class="form-group">
+                                <label for="recipe">Choose a recipe from your list</label>
+                                <select class="form-control" id="recipe" name="">
+                                    <option>Test Option</option>  <!-- DELETE THIS LINE LATER -->
+                                    {% for recipe in recipes %}
+                                    <option>{{ recipe.name }}</option>                                    
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <!--Date to add meal to-->
+                            <div class="form-group">
+                                <label for="date">Schedule for: </label>
+                                <input type="date" class="form-control" name="date" id="date">
+                            </div>
+                            <button class="btn btn-success" type="submit">Add to Meal Plan</button>
+                        </form>
+                    </div>
 
 
 
 
                 </div>
             </div>
+        </div>
 
 
         <!-- ----------------------------------------------- -->

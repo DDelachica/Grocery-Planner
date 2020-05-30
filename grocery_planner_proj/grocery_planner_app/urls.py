@@ -10,6 +10,7 @@ urlpatterns = [
     path('process_message/', views.post_mess),
     path('add_comment/<int:id>/', views.post_comment),
     path('my_profile/', views.my_profile),
+    path('update_user_info/', views.update_profile),
     path('user_profile/<int:id>/', views.profile),
     path('like/<int:id>/', views.add_like),
     path('delete/<int:id>/', views.destroy),
@@ -20,4 +21,10 @@ urlpatterns = [
     path('grocery_list/', views.grocery_list),
     path('meal_plan/', views.meal_plan),
     path('add_recipe/', views.add_recipe),
+    path('create_ingredient/', views.create_ingredient),
+    path('process_add_recipe/', views.process_add_recipe),
+    path('render_edit_recipe/<int:id>/', views.render_edit_recipe),
+    path('update_recipe/<int:id>/', views.update_recipe),
+    path('remove_ingredient/<int:id>/', views.remove_ingredient),
+    path('add_to_meal_plan/', views.add_to_meal_plan),
 ]

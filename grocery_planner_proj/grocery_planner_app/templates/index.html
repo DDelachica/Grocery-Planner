@@ -17,7 +17,11 @@
                 <h1 class="display-4 font-weight-bold" id="website-name">Grocery Planner</h1>
                 <p class="lead text-muted">An easy solution to grocery management.</p>
             </div>
-          
+            <ul class="messages">    
+                {% for message in messages %}    
+                    <li>{{ message }}</li>    
+                {% endfor %}
+            </ul>  
 
 
             <div class="container" id="card-stuff">
@@ -28,11 +32,11 @@
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Email address</label>
-                                <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email">
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password">
+                                <input type="password" class="form-control" id="password" name="password">
                             </div>
                             
                             <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
