@@ -104,4 +104,4 @@ def grocery_list(request):
     context = {
         'grocery_list': Grocery_List.objects.all(),
     }
-    return render(request, 'success.html', context)
+    return render(request, 'success.html', context)` `
