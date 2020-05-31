@@ -17,7 +17,11 @@
                 <h1 class="display-4 font-weight-bold" id="website-name">Grocery Planner</h1>
                 <p class="lead text-muted">An easy solution to grocery management.</p>
             </div>
-          
+            <ul class="messages">    
+                {% for message in messages %}    
+                    <li>{{ message }}</li>    
+                {% endfor %}
+            </ul>  
 
 
             <div class="container" id="card-stuff">

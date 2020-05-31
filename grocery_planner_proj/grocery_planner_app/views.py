@@ -38,10 +38,19 @@ def register(request):
 
 def login(request):
     print(request.POST)
+    errors = User.objects.login_validator(request.POST)
     logged_user = User.objects.filter(email=request.POST.get('email'))
     print(logged_user)
+    
     if len(logged_user) > 0:
         logged_user = logged_user[0]
+        # Validation and errors
+        if len(errors) > 0:       
+            for key, value in errors.items():
+                messages.error(request, value)
+                return redirect('/')
+        
+        # Check password
         if logged_user.password == request.POST['password']:
             request.session['user'] = logged_user.first_name
             request.session['id'] = logged_user.id
