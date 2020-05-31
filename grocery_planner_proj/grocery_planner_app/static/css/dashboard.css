@@ -1,6 +1,6 @@
-div > button {
+#post-button {
     margin: 2% 0 2% 0;
-    padding: 0.25rem 1.5rem;
+    padding: 0.25rem 1.25rem;
 }
 
 body {
@@ -8,6 +8,10 @@ body {
     /* opacity: 0.90; */
 }
 
+/* #recipe-list {
+    opacity: 75%;
+
+} */
 #inline-block {
     display: inline-block;
 }
@@ -17,20 +21,18 @@ body {
     border: 1px solid lightgreen;
     border-radius: 5px;
     opacity: 75%;
+    padding-bottom: 10px;
 }
-
+#meal-plan-calendar > button {
+    margin-bottom: 2%;
+}
 .opaque {
     opacity: 0.75;
 }
 
 .wrapper {
     display: flex;
-    align-items: stretch;
-}
-
-.card {
-    margin-left: 20%;
-    margin-right: 20%;
+    /* align-items: stretch; */
 }
 
 #sidebar {

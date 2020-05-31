@@ -68,6 +68,12 @@ def render_edit_recipe(request, recipe_id):
     }
     return render(request, 'edit_recipe.html', context)
 
+def view_recipe(request, recipe_id):
+    context = {
+        'recipe': Recipe.objects.get(id=recipe_id),
+    }
+    return render(request, 'view_recipe.html', context)
+
 # ------------------------------------------
 
 # <---Updating User Information---->
@@ -95,6 +101,11 @@ def remove_ingredient(request, ingredient_id):
 def add_to_meal_plan(request):
     #needs to add to meal database
     return redirect('/meal_plan')
+
+def import_recipe(request, id):
+    recipe = Recipe.objects.get(id=id)
+    #this needs functionality
+    return redirect('/grocery_list')
 
 
 # <---Wall and comments---->
@@ -146,7 +157,7 @@ def add_item(request):
 def remove_item(request,id):
     delete_item = Grocery_List.objects.get(id=id)
     delete_item.delete()
-    return redirect('/success')
+    return redirect('/grocery_list')
 
 def grocery_list(request):
     if 'user' not in request.session:

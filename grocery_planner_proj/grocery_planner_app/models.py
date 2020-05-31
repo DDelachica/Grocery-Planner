@@ -52,6 +52,7 @@ class Recipe(models.Model):
     recipe_name = models.CharField(max_length=50)
     ingredients = models.ManyToManyField(Ingredient)
     creator = models.ForeignKey(User, related_name='created_by', on_delete=models.CASCADE)
+    instructions = models.CharField(max_length=255)
 
 class Meal(models.Model):
     scheduled_for = models.DateField()

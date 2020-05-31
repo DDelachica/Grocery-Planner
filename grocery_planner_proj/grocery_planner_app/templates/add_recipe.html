@@ -68,7 +68,7 @@
 
 
                 <!--Main content-->
-                <div class="container-fluid">
+                <div class="container">
                     <h1 class="display-4 text-center">Add New Recipe</h1>
                     <div class="row">
                         <div class="container col-8" id="add_recipe_section">
@@ -83,17 +83,31 @@
                                     <label for="ingredient_list">Ingredients</label>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <input type="number" class="form-control" name="qty" id="qty" value="1">
+                                            <input type="number" class="form-control" name="qty" id="quantity" value="1">
                                         </div>
-                                        <input type="text" class="form-control" name="ingredient_list" id="ingredient_list">
+                                        <input type="text" class="form-control" name="ingredient_list" id="ingredient">
                                         <div class="input-group-append">
-                                            <button class="btn btn-success" type="button"><i class="fas fa-plus"></i></button>
-                                        </div>                                      
+                                            <button class="btn btn-success" type="button" onclick="ingredientTable()"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                    <!-- Ingredient Table -->
+                                    <table id="ingredient-table" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Quantity</th>
+                                                <th scope="col">Ingredient Name</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                    <div class="form-group">
+                                        <label for="instructions" class="font-weight-bold">Directions</label>
+                                        <textarea class="form-control" id="instructions" rows="10"></textarea>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-success">Add Recipe</button>
                             <form>
                             <!--END FORM-->
+                            
                         </div>
 
 
@@ -110,14 +124,30 @@
 
                                 <!--For Loop-->
                                 {% for recipe in recipes %}
-                                <a href="/render_edit_recipe/{{ recipe.id }}" class="list-group-item list-group-item-action list-group-item-success">{{ recipe.name }}</a>
+                                <a href="/view_recipe/{{ recipe.id }}" class="list-group-item list-group-item-action list-group-item-success">{{ recipe.name }}</a>
                                 {% endfor %}
                             </ul>
                         </div>
+                    </div>
                 </div>
             </div>
-
-
+        </div>
+        <script>
+            function ingredientTable() {
+                // Validation for empty ingredient fields goes here
+                // if(quantity == null || ingredient == null) {
+                    
+                // }
+                var quantity = document.getElementById("quantity").value;
+                var ingredient = document.getElementById("ingredient").value;
+                var table = document.getElementById("ingredient-table");
+                var row = table.insertRow(1);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                cell1.innerHTML = quantity;
+                cell2.innerHTML = ingredient;
+            }
+        </script>
         <!-- ----------------------------------------------- -->
         <!-- jQuery CDN - Slim version (=without AJAX) -->
         <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->

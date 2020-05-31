@@ -25,7 +25,7 @@
     </head>
     <body>
         
-        <div class="wrapper" style="background-image: url({% static 'images/green-salad-food-wallpaper.jpg' %});">
+        <div class="wrapper" style="background-image: url({% static 'images/coffee-background.jpg' %});">
             <!-- Sidebar -->
             <nav id="sidebar" class="text-muted">
                 <div class="sidebar-header text-right">
@@ -36,10 +36,10 @@
                         <a href="/success">Home</a>
                     </li>
                     <li>
-                        <a href="/meal_plan" active>Meal Plan</a>
+                        <a href="/meal_plan">Meal Plan</a>
                     </li>
                     <li>
-                        <a href="/add_recipe">Add Recipe</a>
+                        <a href="/add_recipe" active>Add Recipe</a>
                     </li>
                     <li>
                         <a href="/grocery_list">Grocery List</a>
@@ -68,63 +68,46 @@
 
 
                 <!--Main content-->
-                <div class="container-fluid">
-                    <h1 class="display-4 text-center">Meal Plan</h1>
+                <div class="container">
+                    <h1 class="display-4 text-center">View Recipe</h1>
+                    <div class="row">
+                        
+                        <!-- Viewing a recipe -->
+                        <div class="container col-8 bg-white">
+                            <p>Name: {{ recipe.name }}</p>
+                            <p>Ingredients</p>
+                            <ul class="list-group">
+                                {% for ingredient in recipe.ingredients %}
+                                <li class="list-group-item">{{ ingredient.name }}</li>
+                                {% endfor %}
+                            </ul>
+                            <p>Instructions</p>
+                            <p>{{ recipe.instructions }}</p>
 
-                    <!--Calendar Example Entry-->
-                    <div class="container bg-white" id="meal-plan-calendar">
-                        <div class="row row-striped">
-                            <div class="col-2 text-right">
-                                <h1 class="display-4"><span class="badge badge-secondary">23</span></h1>
-                                <h2>OCT</h2>
-                            </div>
-                            <div class="col-10">
-                                <h3 class="text-uppercase"><strong>Ice Cream Social</strong></h3>
-                                <ul class="list-inline">
-                                    <li class="list-inline-item"><i class="fas fa-calendar"></i> Monday</li>
-                                    <li class="list-inline-item"><i class="fas fa-clock"></i> 12:30 PM - 2:00 PM</li>
-                                </ul>
-                                <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                            </div>
+                            <a class="text-right" href="/render_edit_recipe/{{ recipe.id }}">Edit Recipe</a>
+                        </div>
+
+                        <!--Right side contains the list of recipes-->
+                        <div class="container col-4" id="recipe_list_section">
+                            <h4>My Recipes</h4>
+                            <ul class="list-group">
+                                <!--Dummy List, Delete Later-->
+                                <a href="#" class="list-group-item list-group-item-action list-group-item-success">Linguini</a>
+                                <a href="#" class="list-group-item list-group-item-action list-group-item-success">Baked Potato</a>
+                                <a href="#" class="list-group-item list-group-item-action list-group-item-success">Pizza Rolls</a>
+                                <!-- end delete -->
+
+                                <!--For Loop-->
+                                {% for recipe in recipes %}
+                                <a href="/view_recipe/{{ recipe.id }}" class="list-group-item list-group-item-action list-group-item-success">{{ recipe.name }}</a>
+                                {% endfor %}
+                            </ul>
                         </div>
                     </div>
-                   
-                        
-                    
-                    <hr class="rounded">
-
-                    <!--Adding a meal -->
-                    <h3 class="text-center">Add to Meal Plan</h3>
-                    <div class="container" id="add-meal-plan">
-                        <form action="/add_to_meal_plan/" method="POST">
-                            {% csrf_token %}
-                            <!--Add Meal from User's list of recipes-->
-                            <div class="form-group">
-                                <label for="recipe">Choose a recipe from your list</label>
-                                <select class="form-control" id="recipe" name="">
-                                    <option>Test Option</option>  <!-- DELETE THIS LINE LATER -->
-                                    {% for recipe in recipes %}
-                                    <option>{{ recipe.name }}</option>                                    
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <!--Date to add meal to-->
-                            <div class="form-group">
-                                <label for="date">Schedule for: </label>
-                                <input type="date" class="form-control" name="date" id="date">
-                            </div>
-                            <button class="btn btn-success" type="submit">Add to Meal Plan</button>
-                        </form>
-                    </div>
-
-
-
-
                 </div>
             </div>
         </div>
-
-
+       
         <!-- ----------------------------------------------- -->
         <!-- jQuery CDN - Slim version (=without AJAX) -->
         <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->

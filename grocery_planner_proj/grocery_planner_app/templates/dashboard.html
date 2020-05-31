@@ -77,44 +77,60 @@
                             {% csrf_token %}
                             <textarea class="form-control opaque" rows="5" name="comment" id="comment"></textarea>
                             <div class="text-right">
-                                <button type="submit" class="btn btn-success text-white">Post</button>                                 
+                                <button id="post-button" type="submit" class="btn btn-success text-white">Post</button>                                 
                             </div>
                         </form>
                     </div>
 
                     <hr class="rounded">
 
-
-                    <!-- Discussion Board -->
-                    <div class="container-fluid">
-                        <h4 class="text-center">Discussion Board</h4>
-                        <div class="container-fluid" id="dboard">
-                            <!--for loop for discussion posts -->
-                            {% for post in wall_messages %}
-                            <!-- <div class="text-center"> -->
-                                <div class="card">
-                                    <div class="card-body">
-                                        <p>{{ post.message }}<!--Poster's comment here--></p>
-                                    </div>
-                                    <div class="card-footer">
-                                        
-                                            <div class="row">
-                                                <div class="col">
-                                                    <a href="/like/{{ post.id }}">
-                                                        <button type="button" class="btn btn-primary">
-                                                            <i class="fas fa-heart"></i> <span class="badge badge-light">{{ post.user_likes.count }}</span>
-                                                        </button>
-                                                    </a>
+                    <div class="row">
+                        <!-- Discussion Board -->
+                        <div class="container-fluid col-8">
+                            <h4 class="text-center">Discussion Board</h4>
+                            <div class="container-fluid" id="dboard">
+                                <!--for loop for discussion posts -->
+                                {% for post in wall_messages %}
+                                <!-- <div class="text-center"> -->
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <p>{{ post.message }}<!--Poster's comment here--></p>
+                                        </div>
+                                        <div class="card-footer">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <a href="/like/{{ post.id }}">
+                                                            <button type="button" class="btn btn-primary">
+                                                                <i class="fas fa-heart"></i> <span class="badge badge-light">{{ post.user_likes.count }}</span>
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col">
+                                                        <p class="text-right">-{{ post.poster.first_name }} {{ post.poster.last_name }}<!--Poster's Name Here--></p> 
+                                                    </div>
                                                 </div>
-                                                <div class="col">
-                                                    <p class="text-right">-<a href="/user_profile/{{post.poster.id}}">{{ post.poster.first_name }} {{ post.poster.last_name }}</a><!--Poster's Name Here--></p> 
-                                                </div>
-                                            </div>
+                                        </div>
                                     </div>
-                                </div>
 
-                            {% endfor %}
-                            <!-- end for loop -->
+                                {% endfor %}
+                                <!-- end for loop -->
+                            </div>
+                        </div>
+                        <!--Right side contains the list of recipes-->
+                        <div class="container col-4" id="recipe_list_section">
+                            <h4 class="text-center text-white">My Recipes</h4>
+                            <ul class="list-group">
+                                <!--Dummy List, Delete Later-->
+                                <a href="#" class="list-group-item list-group-item-action list-group-item-success">Linguini</a>
+                                <a href="#" class="list-group-item list-group-item-action list-group-item-success">Baked Potato</a>
+                                <a href="#" class="list-group-item list-group-item-action list-group-item-success">Pizza Rolls</a>
+                                <!-- end delete -->
+
+                                <!--For Loop-->
+                                {% for recipe in recipes %}
+                                <a href="/view_recipe/{{ recipe.id }}" class="list-group-item list-group-item-action list-group-item-success">{{ recipe.name }}</a>
+                                {% endfor %}
+                            </ul>
                         </div>
                     </div>
                 </div>
