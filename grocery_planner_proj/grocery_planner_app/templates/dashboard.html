@@ -25,7 +25,7 @@
     </head>
     <body>
         
-        <div class="wrapper" >
+        <div class="wrapper" style="background-image: url({% static 'images/coffee-background.jpg' %});">
             <!-- Sidebar -->
             <nav id="sidebar" class="text-muted">
                 <div class="sidebar-header text-right">
@@ -36,16 +36,16 @@
                         <a href="/success" active>Home</a>
                     </li>
                     <li>
-                        <a href="#">Meal Plans</a>
+                        <a href="/meal_plan">Meal Plan</a>
                     </li>
                     <li>
-                        <a href="#">Add Recipe</a>
+                        <a href="/add_recipe">Add Recipe</a>
                     </li>
                     <li>
                         <a href="/grocery_list">Grocery List</a>
                     </li>
                     <li>
-                        <a href="/user_profile/{{request.session.id}}">My Profile</a>
+                        <a href="/my_profile">My Profile</a>
                     </li>
                     <li>
                         <a href="/logout" class="text-danger">Logout</a>
@@ -55,19 +55,15 @@
 
             <!--Everything that's not in the navbar-->
             <div id="content" class="max-width container-fluid">
-                <div>
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <nav class="navbar navbar-expand-lg navbar-light">
                     <div class="container-fluid">
-            
                         <button type="button" id="sidebarCollapse" class="btn btn-info">
                             <i class="fas fa-align-left"></i>
                             <span></span>
                         </button>
-
-                        <a href="/logout" class="text-right text-danger">Logout</a>
-            
                     </div>
-                </nav></div>
+                </nav>
+   
 
 
 
@@ -77,11 +73,11 @@
                     <!-- Post a comment -->
                     <div class="container-fluid" id="comment-area">
                         <p class="lead">Post a comment</p>
-                        <form action="#" method="POST">
-                            {%csrf_token%}
-                            <textarea class="form-control" rows="5" name="comment" id="comment"></textarea>
+                        <form action="/process_message/" method="POST">
+                            {% csrf_token %}
+                            <textarea class="form-control opaque" rows="5" name="comment" id="comment"></textarea>
                             <div class="text-right">
-                                <button type="submit" class="btn btn-success">Post</button>                                 
+                                <button type="submit" class="btn btn-success text-white">Post</button>                                 
                             </div>
                         </form>
                     </div>
@@ -95,36 +91,33 @@
                         <div class="container-fluid" id="dboard">
                             <!--for loop for discussion posts -->
                             {% for post in wall_messages %}
-                            <div class="card">
-                                <div class="card-body">
-                                  <p>{{ post.message }}<!--Poster's comment here--></p>
+                            <!-- <div class="text-center"> -->
+                                <div class="card">
+                                    <div class="card-body">
+                                        <p>{{ post.message }}<!--Poster's comment here--></p>
+                                    </div>
+                                    <div class="card-footer">
+                                        
+                                            <div class="row">
+                                                <div class="col">
+                                                    <a href="/like/{{ post.id }}">
+                                                        <button type="button" class="btn btn-primary">
+                                                            <i class="fas fa-heart"></i> <span class="badge badge-light">{{ post.user_likes.count }}</span>
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="text-right">-<a href="/user_profile/{{post.poster.id}}">{{ post.poster.first_name }} {{ post.poster.last_name }}</a><!--Poster's Name Here--></p> 
+                                                </div>
+                                            </div>
+                                    </div>
                                 </div>
-                                <div class="card-footer">
-                                   <p class="text-right">-<a href="/user_profile/{{post.poster.id}}">{{post.poster.first_name}} {{post.poster.last_name}}</a><!--Poster's Name Here--></p> 
-                                </div>
-                            </div>
+
                             {% endfor %}
                             <!-- end for loop -->
-
-
-                            <!--Dummy Card for testing DELETE THIS LATER-->
-                            <div class="card">
-                                <div class="card-body">
-                                  <p><!--Poster's comment here-->Dummy text for a poster's comment</p>
-                                </div>
-                                <div class="card-footer">
-                                   <p class="text-right">-<!--Poster's Name Here-->Dummy Name</p> 
-                                </div>
-                            </div>
-                            <!--delete dummy later-->
-
-
-
                         </div>
                     </div>
-
                 </div>
-
 
 
 
@@ -142,9 +135,11 @@
         <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script> -->
         <!-- <script>
             $(document).ready(function () {
+
                 $('#sidebarCollapse').on('click', function () {
                     $('#sidebar').toggleClass('active');
                 });
+
             });
         </script> -->
         <!-- ----------------------------------------------- -->

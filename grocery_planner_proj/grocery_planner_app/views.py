@@ -3,7 +3,9 @@ from .models import *
 from django.contrib import messages
 
 def index(request):
+    print("hello john")
     return render(request, 'index.html')
+
 # <---Register and Login ---->
 # sends to success page with wall
 def success(request):
@@ -12,6 +14,7 @@ def success(request):
     context = {
         'wall_messages': Wall_Message.objects.all(),
         'grocery_list': Grocery_List.objects.all(),
+        'current_user': User.objects.get(id=request.session['id'])
     }
     return render(request, 'dashboard.html', context)
 
@@ -28,14 +31,15 @@ def register(request):
         for key, value in errors.items():
             messages.error(request, value)
         return redirect('/')
-    new_user = User.objects.create(first_name=request.POST['fname'], last_name=request.POST['lname'], user_name=request.POST['email'], password=request.POST['password'])
+    new_user = User.objects.create(first_name=request.POST['fname'], last_name=request.POST['lname'], email=request.POST['email'], password=request.POST['password'])
     request.session['user'] = new_user.first_name
     request.session['id'] = new_user.id
     return redirect('/success')
 
 def login(request):
     print(request.POST)
-    logged_user = User.objects.filter(user_name=request.POST['email'])
+    logged_user = User.objects.filter(email=request.POST.get('email'))
+    print(logged_user)
     if len(logged_user) > 0:
         logged_user = logged_user[0]
         if logged_user.password == request.POST['password']:
@@ -44,12 +48,58 @@ def login(request):
             return redirect('/success')
     return redirect('/')
 
+# ------added these render methods, needs functionality
+def my_profile(request):
+    context = {
+        'user': User.objects.get(id=request.session['id'])
+    }
+    return render(request, 'edit_my_profile.html', context)
 
+def meal_plan(request):
+    #needs to pass user's list of recipes
+    return render(request, 'meal_plan.html')
+
+def add_recipe(request):
+    return render(request, 'add_recipe.html')
+
+def render_edit_recipe(request, recipe_id):
+    context = {
+        'recipe': Recipe.objects.get(id=recipe_id),
+    }
+    return render(request, 'edit_recipe.html', context)
+
+# ------------------------------------------
+
+# <---Updating User Information---->
+def update_profile(request):
+    # needs functionality for updating user info
+    return redirect('/update_user_info')
+
+# <---Processing Recipes/Ingredients/MealPlan---->
+# these need functionality
+def create_ingredient(request):
+    return redirect('/add_recipe')
+
+def process_add_recipe(request):
+    return redirect('/add_recipe')
+
+def update_recipe(request, recipe_id):
+    recipe_to_update = Recipe.objects.get(id=recipe_id)
+    # needs updating functionality
+    return redirect('/add_recipe')
+
+def remove_ingredient(request, ingredient_id):
+    #needs functionality
+    return redirect('/add_recipe')
+
+def add_to_meal_plan(request):
+    #needs to add to meal database
+    return redirect('/meal_plan')
 
 
 # <---Wall and comments---->
 def post_mess(request):
-    Wall_Message.objects.create(message=request.POST['mess'], poster=User.objects.get(id=request.session['id']))
+    Wall_Message.objects.create(message=request.POST.get('comment'), poster=User.objects.get(id=request.session['id']))
     return redirect('/success')
 
 def post_comment(request, id):
@@ -104,4 +154,8 @@ def grocery_list(request):
     context = {
         'grocery_list': Grocery_List.objects.all(),
     }
+<<<<<<< HEAD
     return render(request, 'success.html', context)` `
+=======
+    return render(request, 'grocery.html', context)
+>>>>>>> 22e652da205b17a92af15418ddd85613bb15b27b

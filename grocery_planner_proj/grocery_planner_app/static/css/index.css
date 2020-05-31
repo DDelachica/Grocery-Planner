@@ -4,6 +4,9 @@ body {
     background: linear-gradient(to right, #FAFFD1, #A1FFCE); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     height: 100vh; 
 }
+#website-name {
+    -webkit-text-stroke: 1px greenyellow;
+}
 #reg-button {
     background: none!important;
     border: none;
@@ -15,9 +18,12 @@ body {
     text-decoration: underline;
     cursor: pointer;
 }
-.container {
+#card-stuff {
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.jumbotron-fluid {
+    margin-top: 3%;
 }

@@ -5,16 +5,32 @@ div > button {
 
 body {
     background: url('/static/images/coffee-background.jpg');
-    opacity: 0.75;
+    /* opacity: 0.90; */
 }
 
-#content > nav {
-    background: rgba(0, 0, 0, 0);
+#inline-block {
+    display: inline-block;
+}
+
+#meal-plan-calendar {
+    /* background: white; */
+    border: 1px solid lightgreen;
+    border-radius: 5px;
+    opacity: 75%;
+}
+
+.opaque {
+    opacity: 0.75;
 }
 
 .wrapper {
     display: flex;
     align-items: stretch;
+}
+
+.card {
+    margin-left: 20%;
+    margin-right: 20%;
 }
 
 #sidebar {

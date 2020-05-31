@@ -18,15 +18,14 @@ class UserManager(models.Manager):
         return errors
 
 class User(models.Model):
-    user_name = models.CharField(max_length=50)
+    email = models.EmailField(max_length=50)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    description = models.CharField(max_length=200)
+    # description = models.CharField(max_length=200)
     password = models.CharField(max_length=50)
     objects = UserManager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
 
 class Wall_Message(models.Model):
     message = models.CharField(max_length=255)
@@ -43,3 +42,17 @@ class Grocery_List(models.Model):
     creator = models.ForeignKey(User, related_name='user_lists', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+#--------------- Added Classes ----------------------
+class Ingredient(models.Model):
+    name = models.CharField(max_length=50)
+    quantity = models.IntegerField()
+
+class Recipe(models.Model):
+    recipe_name = models.CharField(max_length=50)
+    ingredients = models.ManyToManyField(Ingredient)
+    creator = models.ForeignKey(User, related_name='created_by', on_delete=models.CASCADE)
+
+class Meal(models.Model):
+    scheduled_for = models.DateField()
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)

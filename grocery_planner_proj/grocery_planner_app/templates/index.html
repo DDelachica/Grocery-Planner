@@ -7,91 +7,99 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         {% load static %}
+        <link rel="icon" href="{% static 'images/favicon.png' %}">
         <link rel="stylesheet" href="{% static 'css/index.css' %}">
+
     </head>
     <body>
-        <div class="container">
-            <div class="card rounded-lg" style="width: 30rem;">
-                <img src="{% static 'images/login-photo.jpg' %}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <form action="login" method="POST">
-                        {% csrf_token %}
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" name="password">
-                    </div>
-                    
-                    <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-
-                    <!-- Button to trigger modal -->
-                    <div class="text-right">
-                        <button id="reg-button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
-                        Register
-                        </button>
-                    </div>
-                    <!-- Button to login -->
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Login</button>
-                    </div>
-                </form>
+        <div class="jumbotron-fluid">
+            <div class="container text-center text-white">
+                <h1 class="display-4 font-weight-bold" id="website-name">Grocery Planner</h1>
+                <p class="lead text-muted">An easy solution to grocery management.</p>
+            </div>
+          
 
 
-                    <!-- Modal for Registration -->
-                    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                            <div class="modal-content">
-                                <!-- Modal Header -->
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="staticBackdropLabel">Register</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                </div>
-                                <!-- Modal Body -->
-                                <div class="modal-body">
-                                    <!-- first name, last name, email, password, password confirmation -->
-                                    <form action="register" method="POST">
+            <div class="container" id="card-stuff">
+                <div class="card rounded-lg" style="width: 30rem;">
+                    <img src="{% static 'images/login-photo.jpg' %}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <form action="/login/" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password">
+                            </div>
+                            
+                            <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+    
+                            <!-- Button to trigger modal -->
+                            <div class="text-right">
+                                <button id="reg-button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+                                Register
+                                </button>
+                            </div>
+                            <!-- Button to login -->
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Login</button>
+                            </div>    
+                        </form>
+                        
+
+
+                        <!-- Modal for Registration -->
+                        <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Register</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    </div>
+                                    <!-- Modal Body -->
+                                    <form action="/register/" method="POST">
                                         {% csrf_token %}
-                                        <div class="form-row">
-                                            <div class="form-group col-sm">
-                                                <label for="fname">First Name</label>
-                                                <input type="text" class="form-control" name="fname">
+                                        <div class="modal-body">
+                                            <!-- first name, last name, email, password, password confirmation -->
+                                            <div class="form-row">
+                                                <div class="form-group col-sm">
+                                                    <label for="fname">First Name</label>
+                                                    <input type="text" class="form-control" name="fname">
+                                                </div>
+                                                <div class="form-group col-sm">
+                                                    <label for="lname">Last Name</label>
+                                                    <input type="text" class="form-control" name="lname">
+                                                </div>
                                             </div>
-                                            <div class="form-group col-sm">
-                                                <label for="lname">Last Name</label>
-                                                <input type="text" class="form-control" name="lname">
+                                            <div class="form-row form-group">
+                                                <label for="email">Email</label>
+                                                <input type="email" class="form-control" name="email">
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-sm">
+                                                    <label for="password">Password</label>
+                                                    <input id="password" type="password" class="form-control" name="password" data-toggle="popover" data-trigger="hover" data-content="Password requirements go here." data-placement="top">
+                                                </div>
+                                                <div class="form-group col-sm">
+                                                    <label for="password_conf">Confirm Password</label>
+                                                    <input type="password" class="form-control" name="password_conf">
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="form-row form-group">
-                                            <label for="email">Email</label>
-                                            <input type="email" class="form-control" name="email">
+                                        <!-- Modal Footer -->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
                                         </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-sm">
-                                                <label for="password">Password</label>
-                                                <input id="password" type="text" class="form-control" name="password" data-toggle="popover" data-trigger="hover" data-content="Password requirements go here." data-placement="top">
-                                            </div>
-                                            <div class="form-group col-sm">
-                                                <label for="password_conf">Confirm Password</label>
-                                                <input type="text" class="form-control" name="password_conf">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Modal Footer -->
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                    
-                                    </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
-                        
-                    </form>
-
+                    </div>
                 </div>
             </div>
         </div>
