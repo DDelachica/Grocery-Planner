@@ -69,13 +69,24 @@ def meal_plan(request):
     return render(request, 'meal_plan.html')
 
 def add_recipe(request):
-    return render(request, 'add_recipe.html')
-
-def render_edit_recipe(request, recipe_id):
     context = {
-        'recipe': Recipe.objects.get(id=recipe_id),
+        'recipes': Recipe.objects.all(),
     }
-    return render(request, 'edit_recipe.html', context)
+    return render(request, 'add_recipe.html', context)
+
+def create_recipe(request):
+    new_recipe = Recipe.objects.create(recipe_name=request.POST['recipe_name'], creator=User.objects.get(id=request.session['id']))
+    return redirect('/add_recipe')
+
+def render_edit_recipe(request, id):
+    recipe = Recipe.objects.get(id=id)
+    ingredients = recipe.ingredients.all()
+    context = {
+        'recipe': recipe,
+        'recipes': Recipe.objects.all(),
+    }
+    print(ingredients)
+    return render(request, 'add_recipe.html', context)
 
 def view_recipe(request, recipe_id):
     context = {
@@ -92,14 +103,21 @@ def update_profile(request):
 
 # <---Processing Recipes/Ingredients/MealPlan---->
 # these need functionality
-def create_ingredient(request):
-    return redirect('/add_recipe')
+def add_ingredient(request, id):
+    recipe = Recipe.objects.get(id=id)
+    ingredient = request.POST['ingredient']
+    recipe.ingredients.create(name=request.POST['ingredient'])
+    context = {
+        'recipe': recipe,
+    }
+    print(id)
+    return redirect(f'/add_recipe/')
 
 def process_add_recipe(request):
     return redirect('/add_recipe')
 
-def update_recipe(request, recipe_id):
-    recipe_to_update = Recipe.objects.get(id=recipe_id)
+def update_recipe(request, id):
+    recipe_to_update = Recipe.objects.get(id=id)
     # needs updating functionality
     return redirect('/add_recipe')
 

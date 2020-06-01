@@ -36,9 +36,9 @@ class User(models.Model):
     email = models.EmailField(max_length=50)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    # description = models.CharField(max_length=200)
     password = models.CharField(max_length=50)
     objects = UserManager()
+    # recipes
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -61,11 +61,10 @@ class Grocery_List(models.Model):
 #--------------- Added Classes ----------------------
 class Ingredient(models.Model):
     name = models.CharField(max_length=50)
-    quantity = models.IntegerField()
 
 class Recipe(models.Model):
     recipe_name = models.CharField(max_length=50)
-    ingredients = models.ManyToManyField(Ingredient)
+    ingredients = models.ManyToManyField(Ingredient, related_name="ingredients_to")
     creator = models.ForeignKey(User, related_name='created_by', on_delete=models.CASCADE)
     instructions = models.CharField(max_length=255)
 
