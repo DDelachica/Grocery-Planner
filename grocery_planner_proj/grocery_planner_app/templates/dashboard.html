@@ -39,7 +39,7 @@
                         <a href="/meal_plan">Meal Plan</a>
                     </li>
                     <li>
-                        <a href="/add_recipe/">Add Recipe</a>
+                        <a href="/add_recipe">Add Recipe</a>
                     </li>
                     <li>
                         <a href="/grocery_list">Grocery List</a>
@@ -105,18 +105,13 @@
                                                             </button>
                                                         </a>
                                                     </div>
-                                                    <div class="col text-center">
-                                                        {% if request.session.id == post.poster.id %}
-                                                        <a class="btn btn-danger" href="/delete/{{ post.id }}" role="button">Delete</a>
-                                                        {% endif %}
-                                                    </div>
                                                     <div class="col">
-                                                        <p class="text-right">-{{ post.poster.first_name }} {{ post.poster.last_name }}<!--Poster's Name Here--></p>
+                                                        <p class="text-right">-{{ post.poster.first_name }} {{ post.poster.last_name }}<!--Poster's Name Here--></p> 
                                                     </div>
-                                                    
                                                 </div>
                                         </div>
                                     </div>
+
                                 {% endfor %}
                                 <!-- end for loop -->
                             </div>
@@ -125,15 +120,9 @@
                         <div class="container col-4" id="recipe_list_section">
                             <h4 class="text-center text-white">My Recipes</h4>
                             <ul class="list-group">
-                                <!--Dummy List, Delete Later-->
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-success">Linguini</a>
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-success">Baked Potato</a>
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-success">Pizza Rolls</a>
-                                <!-- end delete -->
-
                                 <!--For Loop-->
-                                {% for recipe in recipes %}
-                                <a href="/view_recipe/{{ recipe.id }}" class="list-group-item list-group-item-action list-group-item-success">{{ recipe.name }}</a>
+                                {% for recipe in recipes.all %}
+                                <a href="/view_recipe/{{ recipe.id }}" class="list-group-item list-group-item-action list-group-item-success">{{ recipe.recipe_name }}</a>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -156,11 +145,9 @@
         <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script> -->
         <!-- <script>
             $(document).ready(function () {
-
                 $('#sidebarCollapse').on('click', function () {
                     $('#sidebar').toggleClass('active');
                 });
-
             });
         </script> -->
         <!-- ----------------------------------------------- -->

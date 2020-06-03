@@ -75,22 +75,26 @@
                     <div class="row">
                         <div class="container col-8" id="edit_recipe_section">
                             <!--FORM FOR UPDATING A RECIPE-->
-                            <form action="#" method="POST">
+                            <form action="/update_recipe/{{ recipe.id }}/" method="POST">
                                 {% csrf_token %}
                                 <div class="form-group">
                                     <label for="recipe_name">Recipe Name</label>
-                                    <input type="text" class="form-control" name="recipe_name" id="recipe_name" value="{{ recipe.name }}">
+                                    <input type="text" class="form-control" name="recipe_name" id="recipe_name" value="{{ recipe.recipe_name }}">
+                                    <input type="submit" class="btn btn-success" value="Update Recipe Name">
                                 </div>
+                            </form>
                                 <div class="form-group">
                                     <label for="ingredient_list">Current Ingredients</label>
                                     <!--display all ingredients -->
                                     <ul class="list-group">
-                                        {% for ingredient in recipe.ingredients %}
+                                        {% for ingredient in recipe.ingredients.all %}
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
-                                                <input type="number" class="form-control" name="qty" id="qty" value="{{ ingredient.quantity }}">
+                                                <p>{{ingredient.quantity}} - {{ingredient.name}}</p>
+                                                <!-- <input type="number" class="form-control" name="qty" id="qty" value="{{ ingredient.quantity }}"> -->
                                             </div>
-                                            <input type="text" class="form-control" name="ingredient_list" id="current_ingredient_list" value="{{ ingredient.name }}">
+
+                                            <!-- <input type="text" class="form-control" name="ingredient_list" id="current_ingredient_list" value="{{ ingredient.name }}"> -->
                                             <div class="input-group-append">
                                                 <a href="/remove_ingredient/{{ingredient.id}}" class="btn btn-danger" role="button"><i class="fas fa-trash"></i></a>
                                             </div>                                      
@@ -98,22 +102,25 @@
                                         {% endfor %}
                                     </ul>
                                 </div>
-
+                            </form>
+                            <form action="/add_ingredient/{{recipe.id}}" method="POST">
+                                {% csrf_token %}
                                 <div class="form-group">
                                     <label for="ingredient_list">Add Ingredient</label>
                                     <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <input type="number" class="form-control" name="qty" id="qty" value="1">
-                                        </div>
-                                        <input type="text" class="form-control" name="ingredient_list" id="ingredient_list">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-success" type="button"><i class="fas fa-plus"></i></button>
-                                        </div>                                      
+                                            <div class="input-group-prepend">
+
+                                                <input type="number" class="form-control" name="qty" id="qty" value={{recipe.ingredients.quantity}}>
+                                            </div>
+                                            <input type="text" class="form-control" name="ingredient" id="ingredient_list">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-success" type="submit"><i class="fas fa-plus"></i></button>
+                                            </div> 
+                                                                          
                                     </div>
                                 </div>
-
-                                <button type="submit" class="btn btn-success">Update Recipe</button>
-                            <form>
+                            </form>   
+                                <!-- <input type="submit" class="btn btn-success" value="Update Recipe"></input> -->
                             <!--END FORM-->
                         </div>
 
@@ -123,15 +130,9 @@
                         <div class="container col-4" id="recipe_list_section">
                             <h4>My Recipes</h4>
                             <ul class="list-group">
-                                <!--Dummy List, Delete Later-->
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-success">Linguini</a>
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-success">Baked Potato</a>
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-success">Pizza Rolls</a>
-                                <!-- end delete -->
-
                                 <!--For Loop-->
                                 {% for recipe in recipes %}
-                                <a href="/render_edit_recipe/{{ recipe.id }}" class="list-group-item list-group-item-action list-group-item-success">{{ recipe.name }}</a>
+                                <a href="/render_edit_recipe/{{ recipe.id }}" class="list-group-item list-group-item-action list-group-item-success">{{ recipe.recipe_name }}</a>
                                 {% endfor %}
                             </ul>
                         </div>
