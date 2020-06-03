@@ -70,10 +70,63 @@
                 <!--Main content-->
                 <div class="container-fluid">
                     <h1 class="display-4 text-center">My Grocery List</h1>
-
-                    <div class="container">
+                    <!-- New Item -->
+                    <form action="/add_item/" method=POST>
+                        {% csrf_token %}
+                        <div class="container">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Item Name:</span>
+                                </div>
+                                <input type="text" class="form-control" name="item">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary btn-success text-white" type="submit">Add Item</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    <div class="row">
+                        <!-- Grocery List -->
                         
+                        <div class="container-fluid col-5 text-center">
+                            <h5 class="text-center">Grocery List</h3>
+                            <ul class="list-group">
+                                {% for thing in grocery_list reversed %}
+                                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center list-group-item-info">
+                                    {{ thing.item }}
+                                    <a class="btn btn-danger" href="/remove/{{ thing.id }}"><i class="fas fa-trash-alt"></i></a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <!-- Recipe List -->
+                        <div class="container-fluid col-5 text-center">
+                            <h5 class="text-center">My Recipes</h3>
+                            <div id="recipe-list" class="bg-white rounded">
+
+                                <!--dummy list item delete later-->
+                                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center list-group-item-success">
+                                    <a href="#">Recipe Example</a> 
+                                    <a class="btn btn-success" href="#"><i class="fas fa-plus"></i> Import Items</a>
+                                </li>
+                                <!--delete above-->
+
+                                {% for recipe in recipes %}
+                                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center list-group-item-success">
+                                    <a href="/view_recipe/{{ recipe.id }}">{{ recipe.recipe_name }}</a>
+                                    <a class="btn btn-success" href="/import_recipe/{{ recipe.id }}"><i class="fas fa-plus"></i> Import Items</a>
+                                </li>
+                                {% endfor %}
+                                
+                            </div>
+                            
+                        </div>
                     </div>
+                    
+                    
+                    
+                    
 
 
 

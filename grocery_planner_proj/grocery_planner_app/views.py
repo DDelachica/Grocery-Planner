@@ -198,7 +198,7 @@ def add_item(request):
 def remove_item(request,id):
     delete_item = Grocery_List.objects.get(id=id)
     delete_item.delete()
-    return redirect('/success')
+    return redirect(f'/grocery_list')
 
 def grocery_list(request):
     if 'user' not in request.session:
