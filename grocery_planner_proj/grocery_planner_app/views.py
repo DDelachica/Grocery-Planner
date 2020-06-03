@@ -3,7 +3,6 @@ from .models import *
 from django.contrib import messages
 
 def index(request):
-    print("hello john")
     return render(request, 'index.html')
 
 # <---Register and Login ---->
@@ -70,6 +69,7 @@ def meal_plan(request):
 
 def add_recipe(request):
     context = {
+        'new_recipe': Recipe.objects.last(),
         'recipes': Recipe.objects.all(),
     }
     return render(request, 'add_recipe.html', context)
@@ -86,7 +86,7 @@ def render_edit_recipe(request, id):
         'recipes': Recipe.objects.all(),
     }
     print(ingredients)
-    return render(request, 'add_recipe.html', context)
+    return render(request, 'view_recipe.html', context)
 
 def view_recipe(request, recipe_id):
     context = {
@@ -111,7 +111,7 @@ def add_ingredient(request, id):
         'recipe': recipe,
     }
     print(id)
-    return redirect(f'/add_recipe/')
+    return redirect('/add_recipe')
 
 def process_add_recipe(request):
     return redirect('/add_recipe')

@@ -71,17 +71,16 @@
                 <div class="container">
                     <h1 class="display-4 text-center">Add New Recipe</h1>
                     <div class="row">
-                        <div class="container col-8" id="add_recipe_section">
+                        <div class="container-fluid col-8" id="add_recipe_section">
                             <!--FORM FOR ADDING A RECIPE-->
                             <form action="/create_recipe/" method="POST">
                                 {% csrf_token %}
                                 <div class="form-group">
-                                    <label for="recipe_name">Recipe Name</label>
+                                    <label for="recipe_name" class="font-weight-bold">Recipe Name</label>
                                     <input type="text" class="form-control" name="recipe_name" id="recipe_name">
                                 </div>
                                 <div class="form-group">
-                                    <label for="ingredient_list">Ingredients</label>
-                                        {% for ingredient in recipe.ingredients.all %}
+                                    <!-- {% for ingredient in recipe.ingredients.all %}
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <input type="number" class="form-control" name="qty" id="quantity" value="1">
@@ -91,52 +90,69 @@
                                             <button class="btn btn-success" type="button" onclick="ingredientTable()"><i class="fas fa-plus"></i></button>
                                         </div>
                                     </div>
-                                    <!-- Ingredient Table -->
-                                    <table id="ingredient-table" class="table">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Quantity</th>
-                                                <th scope="col">Ingredient Name</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
+                                    {% endfor %} -->
                                     <div class="form-group">
                                         <label for="instructions" class="font-weight-bold">Directions</label>
                                         <textarea class="form-control" id="instructions" rows="10"></textarea>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-success">Add Recipe</button>
+                                <button id="add-recipe" type="submit"  class="btn btn-success" onclick="addIngredientSection()">Add Recipe</button>
                             </form>
                             <!--END FORM-->
-                            
                         </div>
 
-                        <div class="input-group mb-3">
-                            <!-- <div class="input-group-prepend">
-                                <input type="number" class="form-control" name="qty" id="qty" value="1">
-                            </div> -->
-                            <form action="/add_ingredient/{{recipe.id}}" method="POST">
-                                {% csrf_token %}
-                                Ingredient: <input type="text" class="form-control" name="ingredient" id="ingredient_list">
-                                <input type="submit" class="btn btn-success" value="Add Ingredient"></input>
-                            </form>
-                            
-                            <!-- <div class="input-group-append">
-                                <button class="btn btn-success" type="button"><i class="fas fa-plus"></i></button>
-                            </div>                                       -->
-                        </div>
-                        <div>
+                        <!-- Modal -->
+                        <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
 
-                        </div>
+                        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content">
+                                    ...
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- End Modal -->
 
+
+                        <div id="ingredients-section" class="container-fluid col-4" style="display:">
+                            <h5 class="text-center">Ingredients</h5>
+                            <div class="input-group mb-3">
+                                <form action="#/add_ingredient/{{ recipes.id }}" method="POST">
+                                    {% csrf_token %}
+                                    <!-- <label for="ingredient_list">Ingredients</label>
+                                    <input type="text" class="form-control" name="ingredient" id="ingredient_list">
+                                    <input type="submit" class="btn btn-success" value="Add Ingredient"></input> -->
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Add Ingredient:</span>
+                                        </div>
+                                        <input type="text" class="form-control" name="item">
+                                        <div class="input-group-append">
+                                            <button onclick="ingredientTable()" class="btn btn-outline-secondary btn-light" type=""><i class="fas fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- Ingredient Table -->
+                            <table id="ingredient-table" class="table bg-white">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Ingredient Name</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        
 
                         <!--Right side contains the list of recipes-->
-                        <div class="container col-4" id="recipe_list_section">
-                            <h4>My Recipes</h4>
+                        <div class="container-fluid" id="recipe_list_section">
+                            <h4 class="text-center">My Recipes</h4>
                             <ul class="list-group">
                                 <!--For Loop-->
                                 {% for recipe in recipes %}
                                 <a href="/render_edit_recipe/{{ recipe.id }}" class="list-group-item list-group-item-action list-group-item-success">{{ recipe.recipe_name }}</a>
+                                <a class="btn btn-danger" href="#/delete/{{ recipe.id }}" role="button"><i class="fas fa-trash-alt"></i></a>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -146,10 +162,6 @@
         </div>
         <script>
             function ingredientTable() {
-                // Validation for empty ingredient fields goes here
-                // if(quantity == null || ingredient == null) {
-                    
-                // }
                 var quantity = document.getElementById("quantity").value;
                 var ingredient = document.getElementById("ingredient").value;
                 var table = document.getElementById("ingredient-table");

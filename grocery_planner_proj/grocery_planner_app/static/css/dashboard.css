@@ -8,10 +8,14 @@ body {
     /* opacity: 0.90; */
 }
 
-/* #recipe-list {
+#recipe-list {
     opacity: 75%;
+}
 
-} */
+#ingredient-table {
+    opacity: 75%;
+}
+
 #inline-block {
     display: inline-block;
 }
