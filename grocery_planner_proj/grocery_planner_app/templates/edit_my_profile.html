@@ -72,7 +72,12 @@
                     <h1 class="display-4 text-center">Edit My Profile</h1>
 
                     <div class="container">
-                        <form action="/update_user_info/" method="POST">
+                        <ul class="messages">    
+                            {% for message in messages %}    
+                                <li>{{ message }}</li>    
+                            {% endfor %}
+                        </ul>  
+                        <form action="/update_user_info/{{user.id}}" method="POST">
                             {% csrf_token %}
                             <!-- first name, last name, email, password, password confirmation -->
                             <div class="form-row">
@@ -96,7 +101,7 @@
                                 </div>
                                 <div class="form-group col-sm">
                                     <label for="password_conf">Confirm Password</label>
-                                    <input type="password" class="form-control" name="password_conf">
+                                    <input type="password" class="form-control" name="password_conf" value={{user.password}}>
                                 </div>
                             </div>
                             <div class="text-right">

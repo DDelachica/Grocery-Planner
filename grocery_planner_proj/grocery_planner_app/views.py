@@ -11,10 +11,13 @@ def index(request):
 def success(request):
     if 'user' not in request.session:
         return redirect('/')
+    user = User.objects.get(id = request.session['id'])
     context = {
         'wall_messages': Wall_Message.objects.all(),
         'grocery_list': Grocery_List.objects.all(),
-        'current_user': User.objects.get(id=request.session['id'])
+        'current_user': User.objects.get(id=request.session['id']),
+        'recipes': user.recipes
+
     }
     return render(request, 'dashboard.html', context)
 
@@ -74,50 +77,72 @@ def add_recipe(request):
     }
     return render(request, 'add_recipe.html', context)
 
+def view_recipe(request, id):
+    user = User.objects.get(id = request.session['id'])
+    context = {
+        'recipe': Recipe.objects.get(id=id),
+        'recipes': user.recipes
+    }
+    return render(request, 'view_recipe.html', context)
+
 def create_recipe(request):
-    new_recipe = Recipe.objects.create(recipe_name=request.POST['recipe_name'], creator=User.objects.get(id=request.session['id']))
+    new_recipe = Recipe.objects.create(recipe_name=request.POST['recipe_name'], creator=User.objects.get(id=request.session['id']), instructions=request.POST['instructions'])
     return redirect('/add_recipe')
 
 def render_edit_recipe(request, id):
     recipe = Recipe.objects.get(id=id)
     ingredients = recipe.ingredients.all()
+    request.session['recipe_id'] = id
     context = {
         'recipe': recipe,
         'recipes': Recipe.objects.all(),
     }
     print(ingredients)
-    return render(request, 'add_recipe.html', context)
+    return render(request, 'edit_recipe.html', context)
 
 # ------------------------------------------
 
 # <---Updating User Information---->
-def update_profile(request):
-    # needs functionality for updating user info
-    return redirect('/update_user_info')
+def update_profile(request, id):
+    errors = User.objects.basic_validator(request.POST)
+    if len(errors)>0:
+        for key, value in errors.items():
+            messages.error(request, value)
+        return redirect('/')
+    profile = User.objects.get(id=id)
+    profile.email = request.POST['email']
+    profile.first_name = request.POST['fname']
+    profile.last_name = request.POST['lname']
+    profile.password = request.POST['password']
+    profile.save()
+    return redirect('/my_profile')
 
 # <---Processing Recipes/Ingredients/MealPlan---->
 # these need functionality
 def add_ingredient(request, id):
     recipe = Recipe.objects.get(id=id)
     ingredient = request.POST['ingredient']
-    recipe.ingredients.create(name=request.POST['ingredient'])
+    recipe.ingredients.create(name=request.POST['ingredient'], quantity=request.POST['qty'])
     context = {
         'recipe': recipe,
     }
     print(id)
-    return redirect(f'/add_recipe/')
+    return redirect(f'/render_edit_recipe/{recipe.id}')
 
 def process_add_recipe(request):
     return redirect('/add_recipe')
 
 def update_recipe(request, id):
     recipe_to_update = Recipe.objects.get(id=id)
-    # needs updating functionality
-    return redirect('/add_recipe')
+    recipe_to_update.recipe_name = request.POST['recipe_name']
+    recipe_to_update.save()
+    return redirect(f'/render_edit_recipe/{id}')
 
-def remove_ingredient(request, ingredient_id):
-    #needs functionality
-    return redirect('/add_recipe')
+def remove_ingredient(request, id):
+    recipe_id = request.session['recipe_id']
+    delete_ingredient = Ingredient.objects.get(id=id)
+    delete_ingredient.delete()
+    return redirect(f'/render_edit_recipe/{recipe_id}')
 
 def add_to_meal_plan(request):
     #needs to add to meal database

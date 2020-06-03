@@ -39,7 +39,7 @@
                         <a href="/meal_plan">Meal Plan</a>
                     </li>
                     <li>
-                        <a href="/add_recipe/" active>Add Recipe</a>
+                        <a href="/add_recipe" active>Add Recipe</a>
                     </li>
                     <li>
                         <a href="/grocery_list">Grocery List</a>
@@ -68,78 +68,40 @@
 
 
                 <!--Main content-->
-                <div class="container-fluid">
-                    <h1 class="display-4 text-center">Add New Recipe</h1>
+                <div class="container">
+                    <h1 class="display-4 text-center">View Recipe</h1>
                     <div class="row">
-                        <div class="container col-8" id="add_recipe_section">
-                            <!--FORM FOR ADDING A RECIPE-->
-                            <form action="/create_recipe/" method="POST">
-                                {% csrf_token %}
-                                <div class="form-group">
-                                    <label for="recipe_name">Recipe Name</label>
-                                    <input type="text" class="form-control" name="recipe_name" id="recipe_name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="ingredient_list">Ingredients</label>
+                        
+                        <!-- Viewing a recipe -->
+                        <div class="container col-8 bg-white">
+                            <p>Name: {{ recipe.recipe_name }}</p>
+                            <p>Ingredients</p>
+                            <ul class="list-group">
                                 {% for ingredient in recipe.ingredients.all %}
-                                    <div class="input-group mb-3">
-                                        <!-- <div class="input-group-prepend">
-                                            <input type="number" class="form-control" name="qty" id="qty" value="1">
-                                        </div> -->
-                            
-                                <ul>
-                                        <li>{{ingredient.quantity }} - {{ingredient.name}}</li>
-                                </ul>
-                            </div>
+                                <li class="list-group-item">{{ ingredient.name }}</li>
                                 {% endfor %}
-                            <div class="form-group">
-                                    <label for="instructions" class="font-weight-bold">Directions</label>
-                                    <textarea class="form-control" id="instructions" rows="10" name="instructions"></textarea>
-                            </div>
-                                        <!-- <div class="input-group-append">
-                                            <button class="btn btn-success" type="button"><i class="fas fa-plus"></i></button>
-                                        </div>                                       -->
-                                    
-                                </div>
-                                <button type="submit" class="btn btn-success">Add Recipe</button>
-                            </form>
-                            <!--END FORM-->
+                            </ul>
+                            <p>Instructions</p>
+                            <p>{{  recipe.instructions }}</p>
+
+                            <a class="text-right" href="/render_edit_recipe/{{ recipe.id }}">Edit Recipe</a>
                         </div>
-
-                        <!-- <div class="input-group mb-3">
-
-                            <form action="/add_ingredient/{{recipe.id}}" method="POST">
-                                {% csrf_token %}
-                            <div class="input-group-prepend">
-                                <input type="number" class="form-control" name="qty" id="qty" value="1">
-                            </div>
-                            Ingredient: <input type="text" class="form-control" name="ingredient" id="ingredient_list">
-                                <input type="submit" class="btn btn-success" value="Add Ingredient"></input>
-                            </form> -->
-                            
-                            <!-- <div class="input-group-append">
-                                <button class="btn btn-success" type="button"><i class="fas fa-plus"></i></button>
-                            </div>                                       -->
-                        </div>
-                        <div>
-
-                        </div>
-
 
                         <!--Right side contains the list of recipes-->
                         <div class="container col-4" id="recipe_list_section">
                             <h4>My Recipes</h4>
                             <ul class="list-group">
                                 <!--For Loop-->
-                                {% for recipe in recipes %}
-                                <a href="/render_edit_recipe/{{ recipe.id }}" class="list-group-item list-group-item-action list-group-item-success">{{ recipe.recipe_name }}</a>
+                                {% for recipe in recipes.all %}
+                                <a href="/view_recipe/{{ recipe.id }}" class="list-group-item list-group-item-action list-group-item-success">{{ recipe.recipe_name }}</a>
                                 {% endfor %}
                             </ul>
                         </div>
+                    </div>
                 </div>
             </div>
-
-
+        </div>
+       
         <!-- ----------------------------------------------- -->
         <!-- jQuery CDN - Slim version (=without AJAX) -->
         <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->

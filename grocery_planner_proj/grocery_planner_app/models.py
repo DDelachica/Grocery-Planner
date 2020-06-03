@@ -61,11 +61,14 @@ class Grocery_List(models.Model):
 #--------------- Added Classes ----------------------
 class Ingredient(models.Model):
     name = models.CharField(max_length=50)
+    quantity = models.IntegerField()
+
 
 class Recipe(models.Model):
     recipe_name = models.CharField(max_length=50)
     ingredients = models.ManyToManyField(Ingredient, related_name="ingredients_to")
     creator = models.ForeignKey(User, related_name='recipes', on_delete=models.CASCADE)
+    instructions = models.CharField(max_length=255)
 
 class Meal(models.Model):
     scheduled_for = models.DateField()
