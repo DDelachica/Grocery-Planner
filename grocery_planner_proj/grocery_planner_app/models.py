@@ -72,4 +72,5 @@ class Recipe(models.Model):
 
 class Meal(models.Model):
     scheduled_for = models.DateField()
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    recipe = models.ForeignKey (Recipe, related_name='recipe_meals', on_delete=models.CASCADE)
+    scheduler = models.ForeignKey(User, related_name='user_meals', on_delete=models.CASCADE)

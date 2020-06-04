@@ -79,6 +79,10 @@
                                 <h2>OCT</h2>
                             </div>
                             <div class="col-10">
+                                {% for meal in meals %}
+                                <p>{{meal.recipe}}</p>
+                                <p>{{meal.schedule_for}}</p>
+                                {% endfor %}
                                 <h3 class="text-uppercase"><strong>Ice Cream Social</strong></h3>
                                 <ul class="list-inline">
                                     <li class="list-inline-item"><i class="fas fa-calendar"></i> Monday</li>
@@ -101,10 +105,10 @@
                             <!--Add Meal from User's list of recipes-->
                             <div class="form-group">
                                 <label for="recipe">Choose a recipe from your list</label>
-                                <select class="form-control" id="recipe" name="">
-                                    <option>Test Option</option>  <!-- DELETE THIS LINE LATER -->
+                                <select class="form-control" id="recipe">
                                     {% for recipe in recipes %}
-                                    <option>{{ recipe.name }}</option>                                    
+                                    <option>{{ recipe.recipe_name }} <span hidden name="recipe">{{recipe.id}}</span></option>
+                                                                        
                                     {% endfor %}
                                 </select>
                             </div>

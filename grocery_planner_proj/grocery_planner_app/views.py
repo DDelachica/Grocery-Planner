@@ -68,8 +68,13 @@ def my_profile(request):
     return render(request, 'edit_my_profile.html', context)
 
 def meal_plan(request):
+    user = request.session['id']
+    context = {
+        "recipes": Recipe.objects.filter(creator=user),
+        "meals": Meal.objects.filter(scheduler=user)
+    }
     #needs to pass user's list of recipes
-    return render(request, 'meal_plan.html')
+    return render(request, 'meal_plan.html', context)
 
 def add_recipe(request):
     context = {
@@ -145,7 +150,8 @@ def remove_ingredient(request, id):
     return redirect(f'/render_edit_recipe/{recipe_id}')
 
 def add_to_meal_plan(request):
-    #needs to add to meal database
+    recipe_id = request.POST['recipe']
+    Meal.objects.create(recipe=Recipe.objects.get(id=recipe_id), schedule_for=request.POST['date'], scheduler=request.session['id'])
     return redirect('/meal_plan')
 
 

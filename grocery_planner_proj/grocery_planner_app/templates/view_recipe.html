@@ -78,15 +78,29 @@
                             <p>Ingredients</p>
                             <ul class="list-group">
                                 {% for ingredient in recipe.ingredients.all %}
-                                <li class="list-group-item">{{ ingredient.name }}</li>
+                                <form action="/add_item/" method=POST>
+                                    {% csrf_token %}
+                                    <div class="container">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Item Name:</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="item" value="{{ ingredient.name }}">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary btn-success text-white" type="submit">Add Item</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                                 {% endfor %}
+                            
                             </ul>
                             <p>Instructions</p>
                             <p>{{  recipe.instructions }}</p>
 
                             <a class="text-right" href="/render_edit_recipe/{{ recipe.id }}">Edit Recipe</a>
                         </div>
-
+                        
                         <!--Right side contains the list of recipes-->
                         <div class="container col-4" id="recipe_list_section">
                             <h4>My Recipes</h4>
