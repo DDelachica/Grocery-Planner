@@ -15,7 +15,7 @@ def success(request):
         'wall_messages': Wall_Message.objects.all(),
         'grocery_list': Grocery_List.objects.all(),
         'current_user': User.objects.get(id=request.session['id']),
-        'recipes': user.recipes
+        'recipes': Recipe.objects.all()
 
     }
     return render(request, 'dashboard.html', context)
@@ -78,7 +78,7 @@ def meal_plan(request):
 def add_recipe(request):
     context = {
         'new_recipe': Recipe.objects.last(),
-        'recipes': Recipe.objects.all(),
+        'recipes': Recipe.objects.filter(creator=User.objects.get(id=request.session['id'])),
     }
     return render(request, 'add_recipe.html', context)
 
@@ -86,7 +86,8 @@ def view_recipe(request, id):
     user = User.objects.get(id = request.session['id'])
     context = {
         'recipe': Recipe.objects.get(id=id),
-        'recipes': user.recipes
+        'recipes': user.recipes,
+        'user': user
     }
     return render(request, 'view_recipe.html', context)
 
@@ -214,7 +215,7 @@ def grocery_list(request):
     if 'user' not in request.session:
         return redirect('/')
     context = {
-        'grocery_list': Grocery_List.objects.all(),
+        'grocery_list': Grocery_List.objects.filter(creator=User.objects.get(id=request.session['id'])),
         'recipes': Recipe.objects.filter(creator=User.objects.get(id=request.session['id']))
     }
     return render(request, 'grocery.html', context)
