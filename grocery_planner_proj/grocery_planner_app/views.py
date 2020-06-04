@@ -67,8 +67,13 @@ def my_profile(request):
     return render(request, 'edit_my_profile.html', context)
 
 def meal_plan(request):
-    #needs to pass user's list of recipes
-    return render(request, 'meal_plan.html')
+    recipes = Recipe.objects.filter(creator=User.objects.get(id=request.session['id']))
+    meals = Meal.objects.filter(creator=User.objects.get(id=request.session['id']))
+    context = {
+        'recipes': recipes,
+        'meals': meals
+    }
+    return render(request, 'meal_plan.html', context)
 
 def add_recipe(request):
     context = {
@@ -145,7 +150,7 @@ def remove_ingredient(request, id):
     return redirect(f'/render_edit_recipe/{recipe_id}')
 
 def add_to_meal_plan(request):
-    #needs to add to meal database
+    meal = Meal.objects.create(recipe=Recipe.objects.get(id=request.POST['meal_name']), scheduled_for=request.POST['date'], creator=User.objects.get(id=request.session['id']))
     return redirect('/meal_plan')
 
 def import_recipe(request, id):
@@ -210,5 +215,6 @@ def grocery_list(request):
         return redirect('/')
     context = {
         'grocery_list': Grocery_List.objects.all(),
+        'recipes': Recipe.objects.filter(creator=User.objects.get(id=request.session['id']))
     }
     return render(request, 'grocery.html', context)

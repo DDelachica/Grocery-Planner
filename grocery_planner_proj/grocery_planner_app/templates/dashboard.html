@@ -91,31 +91,35 @@
                             <div class="container-fluid" id="dboard">
                                 <!--for loop for discussion posts -->
                                 {% for post in wall_messages %}
-                                <!-- <div class="text-center"> -->
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <p>{{ post.message }}<!--Poster's comment here--></p>
-                                        </div>
-                                        <div class="card-footer">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <a href="/like/{{ post.id }}">
-                                                            <button type="button" class="btn btn-primary">
-                                                                <i class="fas fa-heart"></i> <span class="badge badge-light">{{ post.user_likes.count }}</span>
-                                                            </button>
-                                                        </a>
-                                                    </div>
-                                                    <div class="col">
-                                                        <p class="text-right">-{{ post.poster.first_name }} {{ post.poster.last_name }}<!--Poster's Name Here--></p> 
-                                                    </div>
-                                                </div>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <p>{{ post.message }}<!--Poster's comment here--></p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="row">
+                                            <div class="col">
+                                                <a href="/like/{{ post.id }}">
+                                                    <button type="button" class="btn btn-primary">
+                                                        <i class="fas fa-heart"></i> <span class="badge badge-light">{{ post.user_likes.count }}</span>
+                                                    </button>
+                                                </a>
+                                            </div>
+                                            <div class="col text-center">
+                                                {% if request.session.id == post.poster.id %}
+                                                <a class="btn btn-danger" href="/delete/{{ post.id }}" role="button">Delete <i class="fas fa-trash-alt"></i></a>
+                                                {% endif %}
+                                            </div>
+                                            <div class="col">
+                                                <p class="text-right">-{{ post.poster.first_name }} {{ post.poster.last_name }}<!--Poster's Name Here--></p> 
+                                            </div>
                                         </div>
                                     </div>
-
+                                </div>
                                 {% endfor %}
                                 <!-- end for loop -->
                             </div>
                         </div>
+                        
                         <!--Right side contains the list of recipes-->
                         <div class="container col-4" id="recipe_list_section">
                             <h4 class="text-center text-white">My Recipes</h4>

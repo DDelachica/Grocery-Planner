@@ -72,7 +72,7 @@
                     <h1 class="display-4 text-center">Meal Plan</h1>
 
                     <!--Calendar Example Entry-->
-                    <div class="container bg-white" id="meal-plan-calendar">
+                    <!-- <div class="container bg-white" id="meal-plan-calendar">
                         <div class="row row-striped">
                             <div class="col-2 text-right">
                                 <h1 class="display-4"><span class="badge badge-secondary">23</span></h1>
@@ -87,9 +87,23 @@
                                 <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                             </div>
                         </div>
+                    </div> -->
+                    {% for meal in meals %}
+                    <div class="container bg-white" id="meal-plan-calendar">
+                        <div class="row row-striped">
+                            <div class="col-2 text-right">
+                                <h1 class="display-4"><span class="badge badge-secondary">{{ meal.scheduled_for | date:'d' }}</span></h1>
+                                <h2 class="text-uppercase">{{ meal.scheduled_for | date:'b' }}</h2>
+                            </div>
+                            <div class="col-10">
+                                <h3 class="text-uppercase"><strong>{{ meal.recipe.recipe_name }}</strong></h3>
+                                <ul class="list-inline">
+                                    <li class="list-inline-item"><i class="fas fa-calendar"></i> {{ meal.scheduled_for | date:'l' }}</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                   
-                        
+                    {% endfor %}
                     
                     <hr class="rounded">
 
@@ -101,10 +115,9 @@
                             <!--Add Meal from User's list of recipes-->
                             <div class="form-group">
                                 <label for="recipe">Choose a recipe from your list</label>
-                                <select class="form-control" id="recipe" name="">
-                                    <option>Test Option</option>  <!-- DELETE THIS LINE LATER -->
+                                <select class="form-control" id="recipe" name="meal_name">
                                     {% for recipe in recipes %}
-                                    <option>{{ recipe.name }}</option>                                    
+                                    <option value="{{ recipe.id }}">{{ recipe.recipe_name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>

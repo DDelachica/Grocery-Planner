@@ -8,12 +8,36 @@ body {
     /* opacity: 0.90; */
 }
 
+#meal-plan-calendar + #meal-plan-calendar {
+    margin-top: 1%;
+}
+
+.card + .card {
+    margin-top: 1%;
+}
+
+#add-recipe-section, .col-6 {
+    margin-bottom: 2%;
+}
+
+#recipe-list-section {
+    margin-top: 3%;
+}
+
+#recipe-card {
+    opacity: 75%;
+}
+
 #recipe-list {
     opacity: 75%;
 }
 
 #ingredient-table {
     opacity: 75%;
+}
+
+#ingredient-list {
+    width: 65%;
 }
 
 #inline-block {
