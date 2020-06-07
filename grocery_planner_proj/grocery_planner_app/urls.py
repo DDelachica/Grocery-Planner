@@ -26,12 +26,14 @@ urlpatterns = [
 
     # Grocery List
     path('add_item/', views.add_item),
+    path('view_add_item/<int:id>/<int:recipe_id>/', views.view_add_item),
     path('remove/<int:id>/', views.remove_item), 
     path('grocery_list/', views.grocery_list),
     
     # Meal Plan
     path('meal_plan/', views.meal_plan),
     path('add_to_meal_plan/', views.add_to_meal_plan),
+    path('remove_meal_plan/<int:id>', views.remove_plan),
     
     # Recipes
     path('view_recipe/<int:id>/', views.view_recipe),

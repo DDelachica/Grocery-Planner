@@ -78,7 +78,7 @@
                             <h4>Ingredients</h4>
                             <ul class="list-group">
                                 {% for ingredient in recipe.ingredients.all %}
-                                <li class="list-group-item">{{ ingredient.quantity }} x {{ ingredient.name }}</li>
+                                <li class="list-group-item">{{ ingredient.quantity }} x <a href="/view_add_item/{{ingredient.id}}/{{recipe.id}}">{{ ingredient.name }}</li>
                                 {% endfor %}
                             </ul><br>
                             <h4>Instructions</h4>
@@ -90,7 +90,7 @@
 
                         <!--Right side contains the list of recipes-->
                         <div class="container col-4" id="recipe-list-section">
-                            <h4>My Recipes</h4>
+                            <h4>All Recipes</h4>
                             <ul id="recipe-list" class="list-group">
                                 <!--For Loop-->
                                 {% for recipe in recipes.all %}

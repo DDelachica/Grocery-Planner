@@ -70,8 +70,8 @@ def meal_plan(request):
     recipes = Recipe.objects.filter(creator=User.objects.get(id=request.session['id']))
     meals = Meal.objects.filter(creator=User.objects.get(id=request.session['id']))
     context = {
-        'recipes': recipes,
-        'meals': meals
+        'recipes': Recipe.objects.all(),
+        'meals': meals.order_by('scheduled_for'),
     }
     return render(request, 'meal_plan.html', context)
 
@@ -86,7 +86,7 @@ def view_recipe(request, id):
     user = User.objects.get(id = request.session['id'])
     context = {
         'recipe': Recipe.objects.get(id=id),
-        'recipes': user.recipes,
+        'recipes': Recipe.objects.all(),
         'user': user
     }
     return render(request, 'view_recipe.html', context)
@@ -101,7 +101,7 @@ def render_edit_recipe(request, id):
     request.session['recipe_id'] = id
     context = {
         'recipe': recipe,
-        'recipes': Recipe.objects.all(),
+        'recipes': Recipe.objects.filter(creator=request.session['id']),
     }
     print(ingredients)
     return render(request, 'edit_recipe.html', context)
@@ -152,6 +152,11 @@ def remove_ingredient(request, id):
 
 def add_to_meal_plan(request):
     meal = Meal.objects.create(recipe=Recipe.objects.get(id=request.POST['meal_name']), scheduled_for=request.POST['date'], creator=User.objects.get(id=request.session['id']))
+    return redirect('/meal_plan')
+
+def remove_plan(request, id):
+    remove_meal = Meal.objects.get(id=id)
+    remove_meal.delete()
     return redirect('/meal_plan')
 
 def import_recipe(request, id):
@@ -206,6 +211,12 @@ def add_item(request):
     Grocery_List.objects.create(item=request.POST['item'], creator=User.objects.get(id=request.session['id']))
     return redirect('/grocery_list')
 
+def view_add_item(request, id, recipe_id):
+    ingredient = Ingredient.objects.get(id=id)
+
+    Grocery_List.objects.create(item=ingredient.name, creator=User.objects.get(id=request.session['id']))
+    return redirect(f'/view_recipe/{recipe_id}')
+
 def remove_item(request,id):
     delete_item = Grocery_List.objects.get(id=id)
     delete_item.delete()
@@ -216,6 +227,6 @@ def grocery_list(request):
         return redirect('/')
     context = {
         'grocery_list': Grocery_List.objects.filter(creator=User.objects.get(id=request.session['id'])),
-        'recipes': Recipe.objects.filter(creator=User.objects.get(id=request.session['id']))
+        'recipes': Recipe.objects.all()
     }
     return render(request, 'grocery.html', context)

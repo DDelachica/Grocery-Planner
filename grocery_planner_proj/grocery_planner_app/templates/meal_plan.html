@@ -25,7 +25,7 @@
     </head>
     <body>
         
-        <div class="wrapper" style="background-image: url({% static 'images/green-salad-food-wallpaper.jpg' %});">
+        <div class="wrapper" >
             <!-- Sidebar -->
             <nav id="sidebar" class="text-muted">
                 <div class="sidebar-header text-right">
@@ -96,9 +96,10 @@
                                 <h2 class="text-uppercase">{{ meal.scheduled_for | date:'b' }}</h2>
                             </div>
                             <div class="col-10">
-                                <h3 class="text-uppercase"><strong>{{ meal.recipe.recipe_name }}</strong></h3>
+                                <h3 class="text-uppercase"><strong><a href="/view_recipe/{{meal.recipe.id}}">{{ meal.recipe.recipe_name }}</a></strong></h3>
                                 <ul class="list-inline">
                                     <li class="list-inline-item"><i class="fas fa-calendar"></i> {{ meal.scheduled_for | date:'l' }}</li>
+                                    <li class="list-inline-item"><a href="/remove_meal_plan/{{meal.id}}">Remove</a></li>
                                 </ul>
                             </div>
                         </div>
